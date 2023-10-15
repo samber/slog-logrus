@@ -57,18 +57,18 @@ GoDoc: [https://pkg.go.dev/github.com/samber/slog-logrus](https://pkg.go.dev/git
 
 ```go
 type Option struct {
-	// log level (default: debug)
-	Level slog.Leveler
+    // log level (default: debug)
+    Level slog.Leveler
 
-	// optional: logrus logger (default: logrus.StandardLogger())
-	Logger *logrus.Logger
+    // optional: logrus logger (default: logrus.StandardLogger())
+    Logger *logrus.Logger
 
-	// optional: customize json payload builder
-	Converter Converter
+    // optional: customize json payload builder
+    Converter Converter
 
-	// optional: see slog.HandlerOptions
-	AddSource   bool
-	ReplaceAttr func(groups []string, a slog.Attr) slog.Attr
+    // optional: see slog.HandlerOptions
+    AddSource   bool
+    ReplaceAttr func(groups []string, a slog.Attr) slog.Attr
 }
 ```
 
@@ -84,14 +84,14 @@ sloglogrus.ErrorKeys = []string{"error", "err"}
 ```go
 import (
     sloglogrus "github.com/samber/slog-logrus"
-	"github.com/sirupsen/logrus"
+    "github.com/sirupsen/logrus"
     "log/slog"
 )
 
 func main() {
-	logrusLogger := logrus.New()
+    logrusLogger := logrus.New()
 
-	logger := slog.New(sloglogrus.Option{Level: slog.LevelDebug, Logger: logrusLogger}.NewLogrusHandler())
+    logger := slog.New(sloglogrus.Option{Level: slog.LevelDebug, Logger: logrusLogger}.NewLogrusHandler())
     logger = logger.
         With("environment", "dev").
         With("release", "v1.0.0")
