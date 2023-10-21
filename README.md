@@ -43,16 +43,16 @@ A [Logrus](https://github.com/sirupsen/logrus) Handler for [slog](https://pkg.go
 ## 🚀 Install
 
 ```sh
-go get github.com/samber/slog-logrus
+go get github.com/samber/slog-logrus/v2
 ```
 
 **Compatibility**: go >= 1.21
 
-No breaking changes will be made to exported APIs before v2.0.0.
+No breaking changes will be made to exported APIs before v3.0.0.
 
 ## 💡 Usage
 
-GoDoc: [https://pkg.go.dev/github.com/samber/slog-logrus](https://pkg.go.dev/github.com/samber/slog-logrus)
+GoDoc: [https://pkg.go.dev/github.com/samber/slog-logrus/v2](https://pkg.go.dev/github.com/samber/slog-logrus/v2)
 
 ### Handler options
 
@@ -84,7 +84,7 @@ sloglogrus.ErrorKeys = []string{"error", "err"}
 
 ```go
 import (
-    sloglogrus "github.com/samber/slog-logrus"
+    sloglogrus "github.com/samber/slog-logrus/v2"
     "github.com/sirupsen/logrus"
     "log/slog"
 )

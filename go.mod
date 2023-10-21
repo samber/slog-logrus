@@ -1,4 +1,4 @@
-module github.com/samber/slog-logrus
+module github.com/samber/slog-logrus/v2
 
 go 1.21
 
