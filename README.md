@@ -79,6 +79,7 @@ Other global parameters:
 ```go
 sloglogrus.SourceKey = "source"
 sloglogrus.ErrorKeys = []string{"error", "err"}
+sloglogrus.LogLevels = map[slog.Level]logrus.Level{...}
 ```
 
 ### Example

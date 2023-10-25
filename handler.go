@@ -59,7 +59,7 @@ func (h *LogrusHandler) Handle(ctx context.Context, record slog.Record) error {
 		converter = h.option.Converter
 	}
 
-	level := levelMap[record.Level]
+	level := LogLevels[record.Level]
 	args := converter(h.option.AddSource, h.option.ReplaceAttr, h.attrs, h.groups, &record)
 
 	logrus.NewEntry(h.option.Logger).

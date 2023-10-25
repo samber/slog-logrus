@@ -6,7 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var levelMap = map[slog.Level]logrus.Level{
+var LogLevels = map[slog.Level]logrus.Level{
 	slog.LevelDebug: logrus.DebugLevel,
 	slog.LevelInfo:  logrus.InfoLevel,
 	slog.LevelWarn:  logrus.WarnLevel,
