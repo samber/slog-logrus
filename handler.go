@@ -15,8 +15,8 @@ type Option struct {
 	// optional: logrus logger (default: logrus.StandardLogger())
 	Logger *logrus.Logger
 
-	// optional: if set, always use the logger from PerHandleLogger() in Handle()
-	PerHandleLogger func(ctx context.Context) *logrus.Logger
+	// optional: if set, GetLogger will be used to get the logger at each call to Handle
+	GetLogger func(ctx context.Context) *logrus.Logger
 
 	// optional: customize json payload builder
 	Converter Converter
@@ -65,8 +65,8 @@ func (h *LogrusHandler) Handle(ctx context.Context, record slog.Record) error {
 	args := converter(h.option.AddSource, h.option.ReplaceAttr, h.attrs, h.groups, &record)
 
 	logger := h.option.Logger
-	if h.option.PerHandleLogger != nil {
-		logger = h.option.PerHandleLogger(ctx)
+	if h.option.GetLogger != nil {
+		logger = h.option.GetLogger(ctx)
 	}
 
 	logrus.NewEntry(logger).
