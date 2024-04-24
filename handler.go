@@ -2,7 +2,6 @@ package sloglogrus
 
 import (
 	"context"
-
 	"log/slog"
 
 	slogcommon "github.com/samber/slog-common"
@@ -15,6 +14,9 @@ type Option struct {
 
 	// optional: logrus logger (default: logrus.StandardLogger())
 	Logger *logrus.Logger
+
+	// optional: if set, always use the logger from PerHandleLogger() in Handle()
+	PerHandleLogger func(ctx context.Context) *logrus.Logger
 
 	// optional: customize json payload builder
 	Converter Converter
@@ -62,7 +64,12 @@ func (h *LogrusHandler) Handle(ctx context.Context, record slog.Record) error {
 	level := LogLevels[record.Level]
 	args := converter(h.option.AddSource, h.option.ReplaceAttr, h.attrs, h.groups, &record)
 
-	logrus.NewEntry(h.option.Logger).
+	logger := h.option.Logger
+	if h.option.PerHandleLogger != nil {
+		logger = h.option.PerHandleLogger(ctx)
+	}
+
+	logrus.NewEntry(logger).
 		WithContext(ctx).
 		WithTime(record.Time).
 		WithFields(logrus.Fields(args)).
