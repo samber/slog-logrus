@@ -18,6 +18,8 @@ type Option struct {
 
 	// optional: customize json payload builder
 	Converter Converter
+	// optional: fetch attributes from context
+	AttrFromContext []func(ctx context.Context) []slog.Attr
 
 	// optional: see slog.HandlerOptions
 	AddSource   bool
@@ -32,6 +34,10 @@ func (o Option) NewLogrusHandler() slog.Handler {
 	if o.Logger == nil {
 		// should be selected lazily ?
 		o.Logger = logrus.StandardLogger()
+	}
+
+	if o.AttrFromContext == nil {
+		o.AttrFromContext = []func(ctx context.Context) []slog.Attr{}
 	}
 
 	return &LogrusHandler{
@@ -60,7 +66,8 @@ func (h *LogrusHandler) Handle(ctx context.Context, record slog.Record) error {
 	}
 
 	level := LogLevels[record.Level]
-	args := converter(h.option.AddSource, h.option.ReplaceAttr, h.attrs, h.groups, &record)
+	fromContext := slogcommon.ContextExtractor(ctx, h.option.AttrFromContext)
+	args := converter(h.option.AddSource, h.option.ReplaceAttr, append(h.attrs, fromContext...), h.groups, &record)
 
 	logrus.NewEntry(h.option.Logger).
 		WithContext(ctx).
