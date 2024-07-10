@@ -87,6 +87,11 @@ func (h *LogrusHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
 }
 
 func (h *LogrusHandler) WithGroup(name string) slog.Handler {
+	// https://cs.opensource.google/go/x/exp/+/46b07846:slog/handler.go;l=247
+	if name == "" {
+		return h
+	}
+
 	return &LogrusHandler{
 		option: h.option,
 		attrs:  h.attrs,
