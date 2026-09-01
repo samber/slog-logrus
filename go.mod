@@ -1,10 +1,10 @@
 module github.com/samber/slog-logrus/v2
 
-go 1.21
+go 1.23
 
 require (
 	github.com/samber/slog-common v0.21.0
-	github.com/sirupsen/logrus v1.9.4
+	github.com/sirupsen/logrus v1.10.2
 	go.uber.org/goleak v1.3.0
 )
 
