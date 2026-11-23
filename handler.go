@@ -2,6 +2,7 @@ package sloglogrus
 
 import (
 	"context"
+	"slices"
 
 	"log/slog"
 
@@ -95,6 +96,6 @@ func (h *LogrusHandler) WithGroup(name string) slog.Handler {
 	return &LogrusHandler{
 		option: h.option,
 		attrs:  h.attrs,
-		groups: append(h.groups, name),
+		groups: append(slices.Clip(h.groups), name),
 	}
 }
